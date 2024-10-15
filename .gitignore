@@ -1,2 +1,5 @@
+# Ignore the public directory where the generated site lives
+public/
+
 __pycache__/
 

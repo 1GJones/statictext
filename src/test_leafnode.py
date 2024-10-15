@@ -25,7 +25,7 @@ class TestLeafNode(unittest.TestCase):
 
     def test_value_required(self):
         with self.assertRaises(ValueError):
-            LeafNode("p")  # Missing value should raise ValueError
+             LeafNode("p")  # Missing value should raise ValueError
 
 if __name__ == "__main__":
     unittest.main()
