@@ -1,0 +1,2 @@
+# statictext
+Web page generator
