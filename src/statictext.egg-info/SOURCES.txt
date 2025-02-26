@@ -1,0 +1,17 @@
+setup.py
+src/statictext.egg-info/PKG-INFO
+src/statictext.egg-info/SOURCES.txt
+src/statictext.egg-info/dependency_links.txt
+src/statictext.egg-info/top_level.txt
+tests/test.py
+tests/test_block_to_block_type.py
+tests/test_extract_title.py
+tests/test_generate_page.py
+tests/test_htmlnode.py
+tests/test_indentation.py
+tests/test_leafnode.py
+tests/test_markdown.py
+tests/test_markdownnode.py
+tests/test_parentnode.py
+tests/test_splitnode_delimiter.py
+tests/test_textnode.py
