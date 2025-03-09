@@ -36,7 +36,7 @@ class TextNode:
         
     def __repr__(self):
         """Returns a string representation of the TextNode."""
-        return f"TextNode(text={self.text!r}, text_type={self.text_type}, url={self.url!r})"
+        return f"TextNode(text=({self.text!r},{self.text_type},{self.url!r})"
     
 if __name__ == "__main__":
     node1 = TextNode("Hello", TextType.NORMAL)
