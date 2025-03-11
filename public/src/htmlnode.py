@@ -1,5 +1,5 @@
 class HTMLNode:
-        def __init__(self, tag=None, value=None, children=None, props=None):
+        def __init__(self, tag=None, value='', children=None, props=None):
             """
             Initializes an HTMLNode with optional tag, value, children, and properties.
         
@@ -25,8 +25,9 @@ class HTMLNode:
         def __repr__(self):
             """Provides a detailed string representation of an HTMLNode for debugging."""
             tag_repr = f"'{self.tag}'" if self.tag is not None else 'None'
-            value_repr = f"'{self.value}'" if self.value != '' else "''"
-            return f"HTMLNode(tag={tag_repr}, value={value_repr}, children={len(self.children)}, props={self.props_to_html()})"
-
+            value_repr = f"'{self.value}'" if {self.value} else "'"
+            # For props, we want to avoid the leading space in the representation
+            props_str = self.props_to_html().lstrip() 
+            return f"HTMLNode(tag={tag_repr}, value={value_repr}, children={len(self.children)}, props={props_str})"
         
         
