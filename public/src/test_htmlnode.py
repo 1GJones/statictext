@@ -1,6 +1,6 @@
 import unittest
 
-from htmlnode import HTMLNode
+from htmlnode import HTMLNode,LeafNode,ParentNode
 
 class TestHtMLNode(unittest.TestCase):
     
@@ -38,6 +38,53 @@ class TestHtMLNode(unittest.TestCase):
         node = HTMLNode()
         with self.assertRaises(NotImplementedError):
             node.to_html()
+
+    def test_leaf_to_html_p(self):
+        node = LeafNode("p", "Hello, world!")
+        self.assertEqual(node.to_html(), "<p>Hello, world!</p>")
+        
+    def test_leaf_no_value(self):
+        node = LeafNode("p", None)
+        with self.assertRaises(ValueError):
+            node.to_html()
+            
+    def test_leaf_no_tag(self):
+        node = LeafNode(None, "This is raw text")
+        self.assertEqual(node.to_html(), "This is raw text")
+        
+    
+    def test_leaf_with_attributes(self):
+        node = LeafNode("a", "Click me!", {"href": "https://www.google.com"})
+        self.assertEqual(node.to_html(), '<a href="https://www.google.com">Click me!</a>') 
+        
+        
+    def test_parent_tag(self):
+        node=ParentNode(tag=None, children=[LeafNode(tag='span', value='Child')])
+        with self.assertRaises(ValueError) as context:
+            if not context:
+                raise ValueError("ParentNode must have a tag.")
+            node.to_html()
+        self.assertEqual(str(context.exception), "ParentNode must have a tag.")
+        
+    def test_parent_without_tag(self):
+        node= ParentNode(None, [LeafNode('span', 'Child')])
+        with self.assertRaises(ValueError) as context:
+            node.to_html()
+        self.assertEqual(str(context.exception), "ParentNode must have a tag.")
+        
+    def test_parent_have_children(self):
+        node=ParentNode(tag='div', children=[])
+        with self.assertRaises(ValueError) as context:
+            node.to_html()
+        self.assertEqual(str(context.exception), "ParentNode must have children.")
+        
+
+    def test_parent_without_children(self):
+        node=ParentNode('div', [])
+        with self.assertRaises(ValueError) as context:
+            node.to_html()
+        self.assertEqual(str(context.exception), "ParentNode must have children.")
+        
 
         
 if __name__ == '__main__':
