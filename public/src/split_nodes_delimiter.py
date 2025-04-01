@@ -1,5 +1,6 @@
 import re
-from src.textnode import TextNode, TextType
+from textnode import TextNode, TextType
+from markdown_extractor import extract_markdown_images
 
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
     new_nodes = []
@@ -32,3 +33,22 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
 
     return new_nodes
             
+def split_nodes_image(old_nodes):
+    
+    image_node = []
+    
+    for node in old_nodes:
+        # If node is not of TEXT type, add it as-is
+        if node.text_type != TextType.TEXT:
+            image_node.append(node)
+            continue
+        
+        curr_text = node.text
+        
+        images = extract_markdown_images(curr_text)
+        
+        if not images:
+            image_node.append(node)
+            continue
+        
+    

@@ -6,7 +6,8 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
 
-from textnode import TextNode, TextType
+from textnode import TextNode, TextType 
+from markdown_extractor import extract_markdown_images,extract_markdown_links
 
 
 class TestTextNode(unittest.TestCase):

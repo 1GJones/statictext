@@ -1,3 +1,4 @@
+import re 
 from enum import Enum
 
 from htmlnode import LeafNode
@@ -60,9 +61,6 @@ def text_node_to_html_node(text_node):
     else:
         raise Exception(f"Invalid text type: {text_node.text_type}")
    
-
-
-
 if __name__ == "__main__":
     node1 = TextNode("Hello", TextType.TEXT)
     node2 = TextNode("Hello", TextType.TEXT)
