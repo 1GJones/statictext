@@ -1,5 +1,5 @@
 import re
-from textnode import TextNode, TextType
+from utilities.shared_nodes import TextType,TextNode
 from markdown_extractor import extract_markdown_images,extract_markdown_links
 
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
@@ -75,7 +75,7 @@ def split_nodes_image(old_nodes):
         
         # Add any remaining text after the last image
         if remaining_text:
-            image_node.append(TextNode(remaining_text, TextType.TEXT))
+           image_node.append(TextNode(remaining_text, TextType.TEXT))
     
     return image_node
         
