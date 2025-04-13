@@ -59,7 +59,7 @@ class TestHtMLNode(unittest.TestCase):
         
         
     def test_parent_tag(self):
-        node=ParentNode(tag=None, children=[LeafNode(tag='span', value='Child')])
+        node=ParentNode(tag=None, children=[HTMLNode(tag='span', value='Child')])
         with self.assertRaises(ValueError) as context:
             if not context:
                 raise ValueError("ParentNode must have a tag.")
@@ -67,7 +67,7 @@ class TestHtMLNode(unittest.TestCase):
         self.assertEqual(str(context.exception), "ParentNode must have a tag.")
         
     def test_parent_without_tag(self):
-        node= ParentNode(None, [LeafNode('span', 'Child')])
+        node= ParentNode(None, [HTMLNode('span', 'Child')])
         with self.assertRaises(ValueError) as context:
             node.to_html()
         self.assertEqual(str(context.exception), "ParentNode must have a tag.")
