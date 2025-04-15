@@ -1,2 +1,3 @@
 #!/bin/bash
-python3 src/main.py
+echo "🚀 Running site generator..."
+python3 main.py
