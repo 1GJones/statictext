@@ -2,6 +2,7 @@ import unittest
 
 
 from markdown_extractor import TextNode, TextType ,extract_markdown_images ,extract_markdown_links
+from src.extract_title import extract_title
     
     
 class TestMarkdownExtractor(unittest.TestCase):
@@ -52,6 +53,59 @@ class TestMarkdownExtractor(unittest.TestCase):
     # Test malformed markdown_links
         matches = extract_markdown_links("[not closed(https://www.boot.dev)")
         self.assertListEqual([], matches)
+        
+        
+class TestExtractTitle(unittest.TestCase):
+
+    def test_basic_title(self):
+        markdown = "# Hello World"
+        self.assertEqual(extract_title(markdown), "Hello World")
+
+    def test_title_with_extra_spaces(self):
+        markdown = "#     Welcome to Boot.dev     "
+        self.assertEqual(extract_title(markdown), "Welcome to Boot.dev")
+
+    def test_title_with_additional_content(self):
+        markdown = """
+## Subtitle
+Some text here
+
+# Main Title
+
+Another paragraph
+"""
+        self.assertEqual(extract_title(markdown), "Main Title")
+
+    def test_title_not_at_top(self):
+        markdown = """
+Random intro text
+
+# Actual Title
+
+Some paragraph here
+"""
+        self.assertEqual(extract_title(markdown), "Actual Title")
+
+    def test_raises_if_no_h1(self):
+        markdown = """
+## This is a subtitle
+### Another smaller heading
+Some paragraph
+"""
+        with self.assertRaises(ValueError):
+            extract_title(markdown)
+
+    def test_ignores_multiple_hashes(self):
+        markdown = """
+### Not a title
+## Also not a title
+# Valid Title
+"""
+        self.assertEqual(extract_title(markdown), "Valid Title")
+
 
 if __name__ == "__main__":
     unittest.main()
+        
+        
+
