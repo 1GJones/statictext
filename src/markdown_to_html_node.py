@@ -1,9 +1,9 @@
-from src.textnode_to_html import text_node_to_html_node
-from utilities.shared_nodes import TextNode
-from src.block_to_block_type import block_to_block_type, BlockType
-from src.text_to_textnodes import text_to_textnodes, TextNode
-from src.textnode_to_html import text_node_to_html_node
-from src.htmlnode import HTMLNode, ParentNode # assuming your HTML node class is here
+from textnode_to_html import text_node_to_html_node
+from utilities.shared_nodes import TextType
+from block_to_block_type import block_to_block_type, BlockType
+from text_to_textnodes import text_to_textnodes, TextNode
+from textnode_to_html import text_node_to_html_node
+from htmlnode import HTMLNode, ParentNode # assuming your HTML node class is here
 import re
 
 
@@ -59,7 +59,7 @@ def markdown_to_html_node(markdown):
             code_content = block
             if block.startswith("```") and block.endswith("```"):
                code_content = "\n".join(block.splitlines()[1:-1])
-            code_text_node = TextNode(code_content, text_type="code")
+            code_text_node = TextNode(code_content, text_type=TextType.CODE)
             code_html = text_node_to_html_node([code_text_node])[0]
             block_nodes.append(ParentNode(tag="pre", children=[code_html]))
 

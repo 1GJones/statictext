@@ -42,13 +42,21 @@ class LeafNode(HTMLNode):
         :return: A string representing the HTML of the leaf node.
         :raises ValueError: If the leaf node has no value.
         """
-        if not self.value:
-            raise ValueError("LeafNode must have a value.")
         
-        if not self.tag:
+        if self.tag is None:
             return self.value
         
-        return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
+        props_str = self.props_to_html()
+        
+        # Self-closing for void elements like <img>
+        if self.tag in ["img", "br", "hr", "input", "meta", "link"]:
+            return f"<{self.tag}{props_str} />"
+        
+        if not self.value:
+            raise ValueError("LeafNode must have a value.")
+
+        
+        return f"<{self.tag}{props_str}>{self.value}</{self.tag}>"
 
 
 class ParentNode(HTMLNode):

@@ -1,5 +1,5 @@
-from src.htmlnode import HTMLNode, LeafNode
-from utilities.shared_nodes import TextNode, TextType
+from htmlnode import LeafNode
+from utilities.shared_nodes import TextType
 
 def text_node_to_html_node(text_nodes):
     html_nodes = []

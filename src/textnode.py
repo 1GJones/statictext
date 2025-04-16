@@ -1,6 +1,6 @@
 import re 
 from enum import Enum
-from src.utilities.shared_nodes import TextType
+from utilities.shared_nodes import TextType
 
 class TextType(Enum):
     

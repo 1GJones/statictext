@@ -1,8 +1,8 @@
 import unittest
-
-
+import tempfile
+import os
 from markdown_extractor import TextNode, TextType ,extract_markdown_images ,extract_markdown_links
-from src.extract_title import extract_title
+from main import extract_title,generate_page
     
     
 class TestMarkdownExtractor(unittest.TestCase):
@@ -102,6 +102,61 @@ Some paragraph
 # Valid Title
 """
         self.assertEqual(extract_title(markdown), "Valid Title")
+        
+        
+class TestGeneratePage(unittest.TestCase):
+    def setUp(self):
+        # Set up a temporary directory
+        self.test_dir = tempfile.TemporaryDirectory()
+        self.temp_path = self.test_dir.name
+
+    def tearDown(self):
+        # Clean up the temporary directory
+        self.test_dir.cleanup()
+
+    def test_generates_expected_html(self):
+        # Sample markdown content
+        markdown_content = "# Hello Title\n\nThis is **bold** text."
+        template_content = "<html><head><title>{{ Title }}</title></head><body>{{ Content }}</body></html>"
+        expected_output = "<html><head><title>Hello Title</title></head><body><h1>Hello Title</h1><p>This is <b>bold</b> text.</p></body></html>"
+
+        # Create mock markdown and template files
+        md_path = os.path.join(self.temp_path, "test.md")
+        template_path = os.path.join(self.temp_path, "template.html")
+        dest_path = os.path.join(self.temp_path, "output.html")
+
+        with open(md_path, "w") as f:
+            f.write(markdown_content)
+
+        with open(template_path, "w") as f:
+            f.write(template_content)
+
+        # Run the function
+        generate_page(md_path, template_path, dest_path)
+
+        # Read output and verify
+        with open(dest_path, "r") as f:
+            result = f.read().strip()
+
+        self.assertEqual(result, expected_output)
+
+    def test_missing_h1_raises(self):
+        markdown_content = "No headings here"
+        template_content = "<html><title>{{ Title }}</title><body>{{ Content }}</body></html>"
+
+        md_path = os.path.join(self.temp_path, "missing_h1.md")
+        template_path = os.path.join(self.temp_path, "template.html")
+        dest_path = os.path.join(self.temp_path, "output.html")
+
+        with open(md_path, "w") as f:
+            f.write(markdown_content)
+
+        with open(template_path, "w") as f:
+            f.write(template_content)
+
+        with self.assertRaises(ValueError):
+            generate_page(md_path, template_path, dest_path)
+
 
 
 if __name__ == "__main__":
