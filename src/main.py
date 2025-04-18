@@ -1,5 +1,6 @@
 import os
 import shutil
+import sys
 from markdown_to_html_node import markdown_to_html_node
 from textnode import TextNode, TextType
 
@@ -14,8 +15,30 @@ def extract_title(markdown):
             return line[2:].strip()
     raise ValueError("No h1 header found in markdown.")
 
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+    for root, _, files in os.walk(dir_path_content):
+        for file in files:
+            if not file.endswith(".md"):
+                continue
 
-def generate_page(from_path, template_path, dest_path):
+            # Full path to markdown file
+            from_path = os.path.join(root, file)
+
+            # Path relative to content dir
+            rel_path = os.path.relpath(from_path, dir_path_content)
+
+            # Change extension from .md → .html
+            rel_html_path = os.path.splitext(rel_path)[0] + ".html"
+
+            # Full path for output
+            dest_path = os.path.join(dest_dir_path, rel_html_path)
+
+            # Generate HTML page
+            generate_page(from_path, template_path, dest_path)
+
+
+
+def generate_page(from_path, template_path, dest_path, basepath ="/"):
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
     
     # Read the markdown file
@@ -41,6 +64,10 @@ def generate_page(from_path, template_path, dest_path):
         # Replace placeholders in the template
     full_html = template_content.replace("{{ Title }}", title)
     full_html = full_html.replace("{{ Content }}", html_content)
+    
+    # Basepath replacements
+    full_html = full_html.replace('href="/', f'href="{basepath}/')
+    full_html = full_html.replace('src="/', f'src="{basepath}/')
     os.makedirs(os.path.dirname(dest_path), exist_ok=True)   
         # Create destination directory if it doesnt exist
             
@@ -66,7 +93,7 @@ def copy_static_to_public():
     os.mkdir(public_dir)
     print(f"📁 Created: {public_dir}")
 
-    for root, dirs, files in os.walk(static_dir):
+    for root, _, files in os.walk(static_dir):
         rel_path = os.path.relpath(root, static_dir)
         dest_dir = os.path.join(public_dir, rel_path)
         os.makedirs(dest_dir, exist_ok=True)
@@ -78,16 +105,20 @@ def copy_static_to_public():
             print(f"✅ Copied: {src} → {dst}")
 
     print(f"\n📦 Static content successfully copied to: {public_dir}")
+    
+    
 
 
 def main():
+    # Get basepath from command-line
+    basepath = sys.argv[1] if len(sys.argv) > 1 else "/"
+    print(f"🌐 Using base path: {basepath}")
+    
     copy_static_to_public()
     
     # Generate index.html from content
-    from_path = "content/index.md"
     template_path = "template.html"
-    dest_path = "public/index.html"
-    generate_page(from_path, template_path, dest_path)
+    generate_pages_recursive("content", template_path, "public")
 
 
 if __name__ == "__main__":
