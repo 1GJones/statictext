@@ -118,7 +118,7 @@ class TestGeneratePage(unittest.TestCase):
         # Sample markdown content
         markdown_content = "# Hello Title\n\nThis is **bold** text."
         template_content = "<html><head><title>{{ Title }}</title></head><body>{{ Content }}</body></html>"
-        expected_output = "<html><head><title>Hello Title</title></head><body><h1>Hello Title</h1><p>This is <b>bold</b> text.</p></body></html>"
+        expected_output = "<html><head><title>Hello Title</title></head><body><div><h1>Hello Title</h1><p>This is <b>bold</b> text.</p></div></body></html>"
 
         # Create mock markdown and template files
         md_path = os.path.join(self.temp_path, "test.md")

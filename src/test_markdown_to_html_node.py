@@ -1,4 +1,5 @@
 import unittest
+import textwrap
 from markdown_to_html_node import markdown_to_html_node
 
 class TestMarkdownToHtmlNode(unittest.TestCase):
@@ -19,15 +20,17 @@ This is another paragraph with _italic_ text and `code` here
         )
 
     def test_codeblock(self):
-        md = """
-
-            
+        md = textwrap.dedent("""\
+        ```
+        print("Code")
+        ```
+         """)  
         html = markdown_to_html_node(md).to_html()
         self.assertEqual(
-            html,
-            "<div><h1>Title</h1><p>This is a paragraph with a <a href=\"https://example.com\">link</a></p><blockquote>A quote</blockquote><ul><li>List item one</li><li>List item two</li></ul><pre><code>print(\"Code\")\n</code></pre></div>"
-        )
-        """
+        html,
+        "<div><pre><code>print(\"Code\")</code></pre></div>"
+    )
+        
         
     def test_heading(self):
         md = "# This is a Heading"

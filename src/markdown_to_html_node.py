@@ -36,9 +36,11 @@ def split_markdown_blocks(markdown):
         blocks.append("\n".join(current_block))
     return blocks
 
-def markdown_to_html_node(markdown):
+def markdown_to_html_node(markdown: str, wrap_in_div=True):
     blocks = split_markdown_blocks(markdown)
     block_nodes = []
+    
+    
     
     for block in blocks:
         block = block.strip()
@@ -80,6 +82,10 @@ def markdown_to_html_node(markdown):
             list_nodes = [ParentNode(tag="li", children=text_node_to_html_node(text_to_textnodes(re.sub(r"^\d+\.\s+", "", item.strip())))) for item in list_items]
             block_nodes.append(ParentNode(tag="ol", children=list_nodes))
           #wrap everything in a top-level <div>
-    return ParentNode(tag="div", children=block_nodes)  
-            
-            
+                
+    if wrap_in_div:
+        return ParentNode(tag="div", children=block_nodes)
+    elif len(block_nodes)==1:
+        return block_nodes[0] # avoid extra <div>
+    else:
+        return ParentNode(tag="div", children= block_nodes)
