@@ -1,3 +1,4 @@
+
 import os
 import shutil
 import sys
@@ -117,10 +118,12 @@ def copy_static_to_dir(static_dir,output_dir):
     os.mkdir(output_dir)
     print(f"📁 Created: {output_dir}")
 
-    for root, _, files in os.walk(static_dir):
+    for root, dirs, files in os.walk(static_dir):
         rel_path = os.path.relpath(root, static_dir)
         dest_dir = os.path.join(output_dir, rel_path)
         os.makedirs(dest_dir, exist_ok=True)
+        if "docs" in dirs:
+            dirs.remove("docs")
         
         for file in files:
             src = os.path.join(root, file)
@@ -141,7 +144,8 @@ def main():
     # Generate index.html from content
     template_path = "template.html"
 
-    output_dir = "docs"  # ✅ updated from public → docs
+    output_dir = sys.argv[2] if len(sys.argv) > 2 else "public"
+  # ✅ updated from public → docs
     copy_static_to_dir("static", output_dir)
     
     generate_pages_recursive("content", template_path, output_dir,basepath)
@@ -149,4 +153,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

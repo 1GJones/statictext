@@ -1,5 +1,6 @@
 import unittest
 import os
+import sys
 import tempfile
 import shutil
 
@@ -34,6 +35,9 @@ class TestCopyStaticToPublic(unittest.TestCase):
         self.test_dir.cleanup()
 
     def test_copy_static_to_public(self):
+        # Simulate command-line args
+        sys.argv = ["main.py", "/", "public"]
+
         # Run the function
         main()
 

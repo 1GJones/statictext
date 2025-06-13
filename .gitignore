@@ -1,2 +1,21 @@
+# Python
 __pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# macOS
+.DS_Store
+
+# Virtual Envs
+.env
+.venv
+
+# Editors
+.vscode/
+.idea/
+
+# Build Outputs
+docs/
+public/
 
