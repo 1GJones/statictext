@@ -38,19 +38,19 @@ Edit `template.html` to style your page layout. It must include:
 
 ### Step 3: Run the Generator
 
-
+```bash
 python3 src/generate_page.py
-
+```
 🧪 Tests
-Run unit tests with:
+## Run unit tests with:
 
-bash
+```bash
 Copy
 Edit
 python3 -m unittest discover
 📌 Requirements
 Python 3.7+
-
+```
 ## 🤝 Contributing
 This project is open to improvements. If you want to explore how it works or extend its features:
 
@@ -65,19 +65,19 @@ Install dependencies if any (currently uses standard library only).
 ```
 ### Run the generator:
 
-bash
+```bash
 Copy
 Edit
 python3 src/generate_page.py
-
+```
 ### Run all tests:
 
-bash
+```bash
 Copy
 Edit
 python3 -m unittest discover
 Feel free to fork, build, and test it. If you're a hiring manager or a developer interested in contributing — try pulling the project down and running it locally.
-
+```
 
 
 
