@@ -34,6 +34,28 @@ Edit `content/index.md` with your markdown text. Make sure it includes a `# Head
 
 Edit `template.html` to style your page layout. It must include:
 
+
+
+### Step 3: Run the Generator
+
+
+python3 src/generate_page.py
+
+🧪 Tests
+Run unit tests with:
+
+bash
+Copy
+Edit
+python3 -m unittest discover
+📌 Requirements
+Python 3.7+
+
+
+🛠 Author
+Gamal Jones – StaticText Project
+
 ```html
 <title>{{ Title }}</title>
 <div>{{ Content }}</div>
+
