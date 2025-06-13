@@ -51,8 +51,37 @@ python3 -m unittest discover
 📌 Requirements
 Python 3.7+
 
+## 🤝 Contributing
+This project is open to improvements. If you want to explore how it works or extend its features:
 
-🛠 Author
+### Clone the repo:
+
+``` bash
+Copy
+Edit
+git clone https://github.com/1GJones/statictext.git
+cd statictext
+Install dependencies if any (currently uses standard library only).
+```
+### Run the generator:
+
+bash
+Copy
+Edit
+python3 src/generate_page.py
+
+### Run all tests:
+
+bash
+Copy
+Edit
+python3 -m unittest discover
+Feel free to fork, build, and test it. If you're a hiring manager or a developer interested in contributing — try pulling the project down and running it locally.
+
+
+
+
+## 🛠 Author
 Gamal Jones – StaticText Project
 
 ```html
