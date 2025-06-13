@@ -1,2 +1,39 @@
 # statictext
 Web page generator
+
+
+StaticText is a simple static site generator written in Python. It converts Markdown content into styled HTML pages using a provided template and CSS.
+
+## 📁 Project Structure
+
+
+statictext/
+├── content/
+│ └── index.md # Your markdown content
+├── static/
+│ └── index.css # Your custom styles
+├── template.html # Base HTML template with {{ Title }} and {{ Content }} placeholders
+├── public/ # Output folder (auto-created)
+│ └── index.html # Generated HTML file
+├── src/
+│ └── generate_page.py # Python script to generate the page
+├── main.sh # Optional shell script to run the generator
+└── README.md # This file
+
+bash
+Copy
+Edit
+
+## 🚀 Usage
+
+### Step 1: Add Your Markdown Content
+
+Edit `content/index.md` with your markdown text. Make sure it includes a `# Heading` at the top (this will be the page `<title>`).
+
+### Step 2: Customize Your Template
+
+Edit `template.html` to style your page layout. It must include:
+
+```html
+<title>{{ Title }}</title>
+<div>{{ Content }}</div>
